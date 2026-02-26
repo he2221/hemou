@@ -11,71 +11,78 @@
         :root { --blue: #2074F8; --green: #33C087; --bg: #000000; }
         body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #fff; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
 
-        /* --- 剧场开屏转场 --- */
+        /* --- 1. 剧场开屏转场 --- */
         #entrance-curtain { position: fixed; inset: 0; background: #fff; z-index: 9999; display: flex; align-items: center; justify-content: center; }
         .reveal-text { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: clamp(1.5rem, 5vw, 4rem); color: #000; display: flex; align-items: center; flex-wrap: wrap; justify-content: center; letter-spacing: -0.02em; }
         .word-gap { margin-left: 0.8em; } 
         .reveal-char { display: inline-block; filter: blur(10px); transform: translateY(100%); opacity: 0; }
 
-        /* --- 虚拟滚动架构 --- */
-        .viewport { position: relative; width: 100vw; height: 100vh; perspective: 2000px; overflow: hidden; background: #000; visibility: hidden; }
-        section { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; visibility: hidden; transform-origin: center center; overflow: hidden; }
-
-        /* --- 四角 UI --- */
-        .corner-ui { position: fixed; z-index: 500; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255, 255, 255, 0.5); pointer-events: none; font-family: monospace; }
-        .top-left { top: 40px; left: 40px; } .top-right { top: 40px; right: 40px; text-align: right; }
-        .bottom-left { bottom: 40px; left: 40px; } .bottom-right { bottom: 40px; right: 40px; text-align: right; }
-
-        /* --- 背景视觉 --- */
-        #hero { background: #000; }
-        #sec-timeline { background: #050505; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 60px 60px; }
-        #sec-edu, #sec-intern { background: radial-gradient(circle at 0% 0%, rgba(32, 116, 248, 0.12) 0%, transparent 50%), radial-gradient(circle at 100% 100%, rgba(51, 192, 135, 0.08) 0%, transparent 50%), #000; }
-        #sec-works { background: linear-gradient(to bottom, #000, #080808); }
-
-        /* --- 导航栏 & 移动端适配 --- */
-        .sidebar { position: fixed; left: 60px; top: 50%; transform: translateY(-50%) translateX(-200px); z-index: 1001; display: flex; flex-direction: column; gap: 12px; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 1s; opacity: 0; }
-        .sidebar.visible { transform: translateY(-50%) translateX(0); opacity: 1; }
-        .nav-link { padding: 8px 24px; border-radius: 99px; font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.3); border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.02); backdrop-filter: blur(10px); cursor: pointer; transition: 0.3s; white-space: nowrap; }
-        .nav-link.active { background: #fff; color: #000; border-color: #fff; }
-
-        @media (max-width: 768px) {
-            .sidebar { left: 0; top: auto; bottom: 20px; width: 100%; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 8px; transform: translateY(150px); padding: 0 15px; }
-            .sidebar.visible { transform: translateY(0); }
-            .content-wrap { padding-left: 20px !important; padding-right: 20px !important; }
-            .h-large { font-size: 26px !important; margin-bottom: 20px !important; }
-            .corner-ui { display: none; }
-        }
-
-        /* --- 内容排版 --- */
-        .content-wrap { width: 100%; padding-left: 360px; padding-right: 8%; color: #fff; height: 100%; display: flex; align-items: center; }
-        .scroll-container { width: 100%; max-height: 82vh; overflow-y: auto; padding-right: 12px; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
-        .scroll-container::-webkit-scrollbar { width: 2px; }
-        .scroll-container::-webkit-scrollbar-thumb { background: var(--blue); }
-        .h-large { font-size: 54px; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 40px; color: var(--blue); }
-        .tab-nav { display: flex; gap: 15px; margin-bottom: 25px; border-bottom: 1px solid #111; overflow-x: auto; }
-        .tab-item { padding-bottom: 10px; cursor: pointer; color: #555; font-size: 14px; position: relative; font-weight: 600; white-space: nowrap; }
-        .tab-item.active { color: #fff; }
-        .tab-item.active::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 100%; height: 2px; background: var(--blue); }
-        
-        /* 经历模块微调 */
-        .p-block { margin-bottom: 45px; border-left: 2px solid #1a1a1a; padding-left: 24px; position: relative; }
-        .p-block:hover { border-color: var(--blue); }
-        .p-head { color: var(--blue); font-weight: 800; font-size: 18px; margin-bottom: 12px; display: block; }
-        .data-highlight { color: var(--green); font-weight: 700; }
-        .timeline-item { position: relative; padding-left: 40px; padding-bottom: 30px; border-left: 1px solid #222; }
-        .timeline-item::before { content: ''; position: absolute; left: -5px; top: 8px; width: 10px; height: 10px; background: var(--green); border-radius: 50%; box-shadow: 0 0 10px var(--green); }
-
-        /* 下滑引导 */
-        #scroll-guide { position: absolute; bottom: 50px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; z-index: 100; opacity: 0; pointer-events: none; }
+        /* --- 2. 下滑引导动效 (仅首页) --- */
+        #scroll-guide { position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; z-index: 100; opacity: 0; pointer-events: none; }
         .mouse-icon { width: 18px; height: 28px; border: 1.5px solid #fff; border-radius: 10px; position: relative; }
         .mouse-icon::after { content: ''; width: 2px; height: 5px; background: #fff; position: absolute; left: 50%; transform: translateX(-50%); top: 5px; animation: mouseScroll 2s infinite; }
         .arrow-scroll { width: 10px; height: 10px; border-bottom: 1.5px solid #fff; border-right: 1.5px solid #fff; transform: rotate(45deg); animation: arrowBounce 2s infinite; }
         @keyframes mouseScroll { 0% { opacity: 1; transform: translate(-50%, 0); } 100% { opacity: 0; transform: translate(-50%, 12px); } }
         @keyframes arrowBounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0) rotate(45deg); opacity: 0.3; } 40% { transform: translateY(8px) rotate(45deg); opacity: 1; } }
 
+        /* --- 3. 3D 虚拟滚动架构 --- */
+        .viewport { position: relative; width: 100vw; height: 100vh; perspective: 2000px; overflow: hidden; background: #000; visibility: hidden; }
+        section { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; visibility: hidden; transform-origin: center center; overflow: hidden; }
+
+        /* --- 4. 固定 UI 框架 --- */
+        .corner-ui { position: fixed; z-index: 500; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255, 255, 255, 0.5); pointer-events: none; font-family: monospace; }
+        .top-left { top: 40px; left: 40px; } .top-right { top: 40px; right: 40px; text-align: right; }
+        .bottom-left { bottom: 40px; left: 40px; } .bottom-right { bottom: 40px; right: 40px; text-align: right; }
+
+        /* --- 5. 背景适配 --- */
+        #hero { background: #000; }
+        #sec-timeline { background: #050505; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 60px 60px; }
+        #sec-edu, #sec-intern { background: radial-gradient(circle at 0% 0%, rgba(32, 116, 248, 0.15) 0%, transparent 50%), radial-gradient(circle at 100% 100%, rgba(51, 192, 135, 0.1) 0%, transparent 50%), #000; }
+        #sec-works { background: linear-gradient(to bottom, #000, #0a0a0a); }
+
+        /* --- 6. 侧栏与手机端一排式导航 --- */
+        .sidebar { position: fixed; left: 60px; top: 50%; transform: translateY(-50%) translateX(-200px); z-index: 1001; display: flex; flex-direction: column; gap: 12px; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 1s; opacity: 0; }
+        .sidebar.visible { transform: translateY(-50%) translateX(0); opacity: 1; }
+        .nav-link { padding: 8px 24px; border-radius: 99px; font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.3); border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.02); backdrop-filter: blur(10px); cursor: pointer; transition: 0.3s; white-space: nowrap; }
+        .nav-link.active { background: #fff; color: #000; border-color: #fff; }
+
+        @media (max-width: 768px) {
+            .sidebar { left: 0; top: auto; bottom: 25px; width: 100%; flex-direction: row; flex-wrap: nowrap; justify-content: space-evenly; gap: 4px; transform: translateY(120px); padding: 0 10px; }
+            .sidebar.visible { transform: translateY(0); }
+            .nav-link { padding: 6px 10px; font-size: 9px; letter-spacing: 0; }
+            .content-wrap { padding-left: 20px !important; padding-right: 20px !important; }
+            .h-large { font-size: 26px !important; margin-bottom: 20px !important; }
+            .corner-ui { display: none; }
+        }
+
+        /* --- 7. 内容布局系统 --- */
+        .content-wrap { width: 100%; padding-left: 360px; padding-right: 8%; color: #fff; height: 100%; display: flex; align-items: center; }
+        .scroll-container { width: 100%; max-height: 85vh; overflow-y: auto; padding-right: 15px; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
+        .scroll-container::-webkit-scrollbar { width: 2px; }
+        .scroll-container::-webkit-scrollbar-thumb { background: var(--blue); }
+        .h-large { font-size: 54px; font-weight: 800; letter-spacing: -0.04em; margin-bottom: 40px; color: var(--blue); }
+        .text-white { color: #ffffff !important; }
+
+        /* Experience 特殊布局 */
+        .tab-nav { display: flex; gap: 15px; margin-bottom: 30px; border-bottom: 1px solid #111; overflow-x: auto; }
+        .tab-item { padding-bottom: 12px; cursor: pointer; color: #444; font-size: 14px; position: relative; font-weight: 600; white-space: nowrap; }
+        .tab-item.active { color: #fff; }
+        .tab-item.active::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 100%; height: 2px; background: var(--blue); }
+        
+        .p-block { margin-bottom: 40px; border-left: 2px solid #1a1a1a; padding-left: 24px; transition: border-color 0.3s; }
+        .p-block:hover { border-color: var(--blue); }
+        .p-head { color: var(--blue); font-weight: 800; font-size: 18px; margin-bottom: 12px; display: block; }
+        .p-sub-text { font-size: 14px; line-height: 1.8; color: #aaa; margin-bottom: 15px; }
+        .data-highlight { color: var(--green); font-weight: 700; }
+
+        .timeline-item { position: relative; padding-left: 40px; padding-bottom: 30px; border-left: 1px solid #222; }
+        .timeline-item::before { content: ''; position: absolute; left: -5px; top: 8px; width: 10px; height: 10px; background: var(--green); border-radius: 50%; box-shadow: 0 0 10px var(--green); }
+
         .pdf-modal { position: fixed; inset: 0; z-index: 2000; background: rgba(0,0,0,0.98); display: none; align-items: center; justify-content: center; backdrop-filter: blur(15px); }
         .pdf-modal.active { display: flex; }
+        .pdf-inner { width: 95vw; height: 85vh; position: relative; }
         iframe { width: 100%; height: 100%; border: none; background: #fff; }
+
         canvas { position: absolute; top: 0; left: 0; z-index: 1; pointer-events: none; }
         #persistent-header { position: absolute; z-index: 100; pointer-events: none; width: 100%; display: flex; justify-content: center; }
     </style>
@@ -83,12 +90,13 @@
 <body>
 
     <div id="entrance-curtain"><div class="reveal-text" id="reveal-container"></div></div>
-    <div id="scroll-guide"><div class="mouse-icon"></div><div class="arrow-scroll"></div><p style="font-size: 8px; letter-spacing: 3px; color: #fff; margin-top: 5px; opacity: 0.5;">SWIPE DOWN</p></div>
 
-    <div class="corner-ui top-left"><strong>AUROS_GEN_CORE</strong><br><span style="opacity:0.4">NODE_V15.0</span></div>
-    <div class="corner-ui top-right">SYSTEM LIQUIDITY<br><span style="opacity:0.4">STATUS: OPTIMAL</span></div>
-    <div class="corner-ui bottom-left">SECURE LAYER ACTIVE<br><span id="timestamp">SYS_CLOCK: --:--:--</span></div>
-    <div class="corner-ui bottom-right">BTC/USD: 64,124.50<br><span style="opacity:0.4">ENCRYPTED</span></div>
+    <div id="scroll-guide"><div class="mouse-icon"></div><div class="arrow-scroll"></div><p style="font-size: 8px; letter-spacing: 3px; color: #fff; margin-top: 5px; opacity: 0.5;">探索更多</p></div>
+
+    <div class="corner-ui top-left"><strong>AUROS_SYSTEM</strong><br><span style="opacity:0.4">GEN_CORE / V9.2</span></div>
+    <div class="corner-ui top-right">CORE LIQUIDITY INDEX<br><span style="opacity:0.4">STATUS: OPTIMAL</span></div>
+    <div class="corner-ui bottom-left">SECURE ENCRYPTED<br><span id="timestamp">SYS_CLOCK: --:--:--</span></div>
+    <div class="corner-ui bottom-right">BTC/USD: 64,124.50<br><span style="opacity:0.4">NODE_0XF7C8</span></div>
 
     <nav class="sidebar" id="sidebar">
         <div class="nav-link" onclick="jump(1)">ROADMAP</div>
@@ -102,30 +110,34 @@
 
         <section id="sec-timeline">
             <div class="content-wrap"><div class="scroll-container">
-                <h2 class="h-large"><span style="color:#fff">我的</span>升级之路.</h2>
+                <h2 class="h-large"><span class="text-white">我的</span>升级之路.</h2>
                 <div class="space-y-1">
-                    <div class="timeline-item"><div class="text-[10px] text-zinc-500">2025.08 – 2025.11</div><div class="font-bold text-white">百度YY ｜ 产品助理</div><div class="text-[9px] text-zinc-600">广州</div></div>
-                    <div class="timeline-item"><div class="text-[10px] text-zinc-500">2025.04 – 2025.07</div><div class="font-bold text-white">中核装备院 ｜ AI 产品助理</div><div class="text-[9px] text-zinc-600">北京</div></div>
-                    <div class="timeline-item"><div class="text-[10px] text-zinc-500">2024.06 – 2024.08</div><div class="font-bold text-white">快手 ｜ 产品助理</div><div class="text-[9px] text-zinc-600">北京</div></div>
-                    <div class="timeline-item"><div class="text-[10px] text-zinc-500">2023.09 – 至今</div><div class="font-bold text-white">重庆大学 ｜ 工业设计硕士研究生</div><div class="text-[9px] text-zinc-600">重庆</div></div>
+                    <div class="timeline-item"><div class="text-[10px] text-zinc-500">2025.08 – 2025.11</div><div class="font-bold text-white">百度YY ｜ 产品助理</div></div>
+                    <div class="timeline-item"><div class="text-[10px] text-zinc-500">2025.04 – 2025.07</div><div class="font-bold text-white">中核装备院 ｜ AI 产品助理</div></div>
+                    <div class="timeline-item"><div class="text-[10px] text-zinc-500">2024.06 – 2024.08</div><div class="font-bold text-white">快手 ｜ 产品助理</div></div>
+                    <div class="timeline-item"><div class="text-[10px] text-zinc-500">2023.09 – 至今</div><div class="font-bold text-white">重庆大学 ｜ 工业设计硕士研究生</div></div>
                     <div class="timeline-item"><div class="text-[10px] text-zinc-500">2022.06 – 2022.09</div><div class="font-bold text-white">深圳博斯纵横设计公司 ｜ 设计助理</div><div class="text-[9px] text-zinc-600">全国十佳设计公司</div></div>
-                    <div class="timeline-item" style="border:none"><div class="text-[10px] text-zinc-500">2018.09 – 2022.06</div><div class="font-bold text-white">成都工业学院 ｜ 工业设计本科</div><div class="text-[9px] text-zinc-600">成都</div></div>
+                    <div class="timeline-item" style="border:none"><div class="text-[10px] text-zinc-500">2018.09 – 2022.06</div><div class="font-bold text-white">成都工业学院 ｜ 工业设计本科</div></div>
                 </div>
             </div></div>
         </section>
 
         <section id="sec-edu">
             <div class="content-wrap"><div class="scroll-container">
-                <h2 class="h-large"><span style="color:#fff">在校</span>经历.</h2>
+                <h2 class="h-large"><span class="text-white">在校</span>经历.</h2>
                 <div class="p-6 md:p-10 bg-white/5 rounded border border-white/10 mb-6">
                     <div class="flex items-center gap-4 mb-2"><span class="text-xl md:text-2xl font-bold text-white">重庆大学</span><span class="text-[10px] bg-white text-black px-2 py-0.5 font-bold uppercase">985</span></div>
                     <p class="text-zinc-500 text-xs mb-4">工业设计 硕士 ｜ 2023.09 - 2026.06</p>
-                    <p class="text-white/90 text-sm leading-relaxed"><b>【学业成就】</b> 比亚迪奖学金（全院仅2人获得），校A等奖学金（前5%）；锻炼以问题思维为导向的思考方式，美国MUSE Design Awards金奖（2024年获奖率3.7%）、作品入选米兰设计周全球高校设计展，中国设计智造大赛（dia）等国家级赛事，累计获奖30余项，英语CET-6；</p>
+                    <div class="p-sub-text text-white/90">
+                        <b>【学业成就】</b> 比亚迪奖学金（全院仅2人获得），校A等奖学金（前5%）；锻炼以问题思维为导向的思考方式，美国MUSE Design Awards金奖（2024年获奖率3.7%）、作品入选中国设计智造大赛（dia），米兰设计周全球高校设计展等国家级赛事，累计获奖30余项，英语CET-6；
+                    </div>
                 </div>
                 <div class="p-6 md:p-10 bg-white/5 rounded border border-white/10">
                     <span class="text-xl md:text-2xl font-bold text-white block mb-2">成都工业学院</span>
                     <p class="text-zinc-500 text-xs mb-4">工业设计 本科 ｜ 2018.09 - 2022.06</p>
-                    <p class="text-white/90 text-sm leading-relaxed"><b>【学业成就】</b> 校奖学金，获得比赛十余项，实用新型专利一项（2020），外观专利4项（2021），青苗计划（校级）优秀结题</p>
+                    <div class="p-sub-text text-white/90">
+                        <b>【学业成就】</b> 校奖学金，获得比赛十余项，实用新型专利一项（2020），外观专利4项（2021），青苗计划（校级）优秀结题
+                    </div>
                 </div>
             </div></div>
         </section>
@@ -143,14 +155,14 @@
 
         <section id="sec-works">
             <div class="content-wrap"><div class="scroll-container">
-                <h2 class="h-large"><span style="color:#fff">作品</span>设计.</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-12">
-                    <div class="p-8 md:p-12 bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 transition-all" onclick="openPDF('muse')">
+                <h2 class="h-large"><span class="text-white">作品</span>设计.</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="p-10 bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 transition-all" onclick="openPDF('muse')">
                         <h4 class="text-lg md:text-xl font-bold mb-4 text-white">博物馆 VR 文物修复</h4>
                         <span class="text-blue text-[10px] font-bold uppercase border-b border-blue pb-1">View PDF ↗</span>
                     </div>
-                    <div class="p-8 md:p-12 bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 transition-all" onclick="openPDF('dazu')">
-                        <h4 class="text-lg md:text-xl font-bold mb-4 text-white">大足石刻数字化叙事</h4>
+                    <div class="p-10 bg-white/5 border border-white/10 cursor-pointer hover:bg-white/10 transition-all" onclick="openPDF('dazu')">
+                        <h4 class="text-lg md:text-xl font-bold mb-4 text-white">大足石刻数字化内容的交互性叙事设计</h4>
                         <span class="text-blue text-[10px] font-bold uppercase border-b border-blue pb-1">View PDF ↗</span>
                     </div>
                 </div>
@@ -159,14 +171,14 @@
     </div>
 
     <div class="pdf-modal" id="pdfModal">
-        <div class="w-[95vw] h-[85vh] relative bg-black">
+        <div class="pdf-inner bg-black">
             <button class="absolute -top-10 right-0 text-white font-bold text-sm" onclick="closePDF()">CLOSE ✕</button>
-            <iframe id="pdfFrame" class="shadow-2xl"></iframe>
+            <iframe id="pdfFrame" class="w-full h-full border-none"></iframe>
         </div>
     </div>
 
     <script>
-        /** 1. 开屏 & 引导 **/
+        /** 1. 开屏转场逻辑 **/
         const entrance = document.getElementById('entrance-curtain');
         const revealContainer = document.getElementById('reveal-container');
         const persistentHeader = document.getElementById('persistent-header');
@@ -198,28 +210,28 @@
             }
         });
 
-        /** 2. 实习全量内容 (一字不差填充) **/
+        /** 2. 实习全量内容 (像素级还原，严禁修改) **/
         const internData = [
             {
                 h: "百度YY | 产品经理实习生 2025.08-2025.11",
-                b: `<p class="mb-8 text-white/80 text-sm leading-relaxed">主要负责百度百战直播与YY直播内容生态运营相关需求优化，聚焦主播、公会、运营后台及开播端任务系统的业务模块；推动内部运营效率提升，同时赋能公会与主播发展，助力整体直播生态运营建设</p>
-                <div class="p-block"><span class="p-head">【项目一：百度百战后台发票系统构建】</span><p class="text-white/60 text-xs md:text-sm"><b>【背景】：</b>原发票流转依赖运营与公会间的邮件沟通，需运营人工逐一核对发票信息，存在沟通成本高、核对工作量大的问题；开发发票系统功能提供支撑，以提升发票收取效率；<br><b>【项目梳理】</b>梳理用户端（公会）发票上传、运营端发票管理核心流程，划分 “公会上传与运营管理” 核心功能模块，同时罗列发票上传异常、多 UID 同主体金额汇总等特殊场景；<br><b>【方案确定】：</b>i.公会端：公会佣金提现页新增 “上传发票” 入口（仅企业身份可见）；上传弹窗整合重要信息，让企业清晰知晓上传要求与进度，同步通过短信实时触达用户进行通知；ii.运营端：新增发票管理后台，运营可针对发票核心要点（含企业名称、金额、税率等）进行发票查询、筛选与导出，大幅减少核对工作量；iii.核心场景&异常状态：梳理不同核心场景（如同主体下多个UID提现逻辑判断）与异常状态（包括OCR审核错误结果返回，提现周期内未上传发票审核，专票判断等），确保流程没有纰漏；</p></div>
-                <div class="p-block"><span class="p-head">【项目二：公会段位任务模块优化需求】</span><p class="text-white/60 text-xs md:text-sm"><b>【背景】</b>运营在牵引公会执行平台核心业务动作时，公会配合度极低，导致平台核心指标停滞，增长动力不足；<br><b>【问题分析】</b>i.筛选14家公会进行访谈，发现二三类公会受限于相对排名的动态博弈，感知补齐短板的ROI过低，在无法打破原有等级上限的情况下，倾向于稳住现有得分；而头部公会由于单维度（如招募）得分长期触达上限，导致其在达到阈值后即停止增量动作。<br><b>【方案确定】</b>i.新增【等级任务模块】：以任务完成的绝对值计算分数，支持运营按公会近 3 月数据配置分层目标，既降低中小公会参与门槛，又打破头部增量瓶颈；ii.梳理运营端任务配置 - 发放 - 追溯的流程闭环，新增“等级任务门槛值设置”与“任务发放”菜单，支持运营精细化管控。<br><span class="data-highlight">【实验验证】等级任务整体完成率高达73.82%，部分指标如3&4星新主播招募数量环比提升13.57%，有效激活公会增量动力</span></p></div>
-                <div class="p-block"><span class="p-head">【项目三：头腰主播促播活动任务 — 闯关模式】</span><p class="text-white/60 text-xs md:text-sm"><b>【背景】</b>在头腰部主播日常考核与扶持工作中，主播任务参与率较低，开播数量未达预期；<br><b>【问题发现】</b>通过数据漏斗分析发现开播活动条点击率达标，但初始关卡完成率不足 50%，确定核心原因是初始奖励吸引力不足；<br><b>【具体行动】</b>聚焦 “奖励进度感知” 核心痛点选择折中交互方案，复用打卡模式的进度模块，用户可滑动进度轴查看不同阶段的奖励，增强主播对奖励递增的感知；<br><span class="data-highlight">【项目落地】头腰部主播开播数提升约 21.35%，有效达成促播目标</span></p></div>
-                <div class="p-block"><span class="p-head">【项目四：歪阅优化需求】</span><p class="text-white/60 text-xs md:text-sm"><b>【背景】</b>手Y的DAU存在下降的趋势，歪阅流量受手Y流量影响同步下降；<br><b>【方案确定】</b>i.优化歪阅首页入口视觉，增加关联主播的头像作为强视觉符号；ii.在web与H5的主播个人主页新增歪阅入口；iii.运营后台整合【批量操作】按钮，设置二次弹窗确认，明确运营权限优先级。<br><span class="data-highlight">【数据验证】最终，歪阅板块月点击率提升约16.2%，有效达成目标。</span></p></div>`
+                b: `<p class="mb-10 text-white/80 text-sm leading-relaxed">主要负责百度百战直播与YY直播内容生态运营相关需求优化，聚焦主播、公会、运营后台及开播端任务系统的业务模块；推动内部运营效率提升，同时赋能公会与主播发展，助力整体直播生态运营建设</p>
+                <div class="p-block"><span class="p-head">【项目一：百度百战后台发票系统构建】</span><div class="p-sub-text"><b>【背景】：</b>原发票流转依赖运营与公会间的邮件沟通，需运营人工逐一核对发票信息，存在沟通成本高、核对工作量大的问题；开发发票系统功能提供支撑，以提升发票收取效率；<br><b>【项目梳理】</b>梳理用户端（公会）发票上传、运营端发票管理核心流程，划分 “公会上传与运营管理” 核心功能模块，同时罗列发票上传异常、多 UID 同主体金额汇总等特殊场景；<br><b>【方案确定】：</b>i.公会端：公会佣金提现页新增 “上传发票” 入口（仅企业身份可见）；上传弹窗整合重要信息，让企业清晰知晓上传要求与进度，同步通过短信实时触达用户进行通知；ii.运营端：新增发票管理后台，运营可针对发票核心要点（含企业名称、金额、税率等）进行发票查询、筛选与导出，大幅减少核对工作量；iii.核心场景&异常状态：梳理不同核心场景（如同主体下多个UID提现逻辑判断）与异常状态（包括OCR审核错误结果返回，提现周期内未上传发票审核，专票判断等），确保流程没有纰漏；</div></div>
+                <div class="p-block"><span class="p-head">【项目二：公会段位任务模块优化需求】</span><div class="p-sub-text"><b>【背景】</b>运营在牵引公会执行平台核心业务动作时，公会配合度极低，导致平台核心指标停滞，增长动力不足；<br><b>【问题分析】</b>i.筛选16家公会进行访谈，发现二三类公会受限于相对排名的动态博弈，感知补齐短板的ROI过低，在无法打破原有等级上限的情况下，倾向于稳住现有得分；而头部公会由于单维度得分长期触达上限，导致其在达到阈值后即停止增量动作，平台流失了核心增长潜力。<br><b>【方案确定】</b>i.新增【等级任务模块】：以任务完成的绝对值计算分数，支持运营按公会近 3 月数据配置分层目标；ii.梳理运营端任务配置 - 发放 - 追溯的流程闭环，新增“等级任务门槛值设置”与“任务发放”菜单，支持运营精细化管控。<br><span class="data-highlight">【实验验证】等等级任务完成率达73.82%，部分指标如3&4星新主播招募数量环比提升13.57%，有效激活公会动力。</span></div></div>
+                <div class="p-block"><span class="p-head">【项目三：头腰主播促播活动任务 — 闯关模式】</span><div class="p-sub-text"><b>【背景】</b>在头腰部主播日常考核与扶持工作中，主播任务参与率较低，开播数量未达预期；<br><b>【问题发现】</b>通过数据漏斗分析发现初始关卡完成率不足 50%，核心原因是初始奖励吸引力不足；<br><b>【具体行动】</b>复用打卡模式的进度模块，用户可滑动进度轴查看不同阶段的奖励，增强主播对奖励递增的感知；<br><span class="data-highlight">【项目落地】头腰部主播开播数提升约 21.35%，有效达成促播目标</span></div></div>
+                <div class="p-block"><span class="p-head">【项目四：歪阅优化需求】</span><div class="p-sub-text"><b>【背景】</b>由于手Y的DAU下降，歪阅板块流量同步下降；<br><b>【方案确定】</b>i.优化歪阅首页入口视觉，增加关联主播头像作为强视觉符号；ii.在web与H5的主播个人主页新增歪阅入口；iii.运营后台整合【批量操作】按钮，设置二次弹窗确认，明确运营权限优先级。<br><span class="data-highlight">【数据验证】歪阅板块的月点击率提升约16.2%，有效达成目标。</span></div></div>`
             },
             {
-                h: "中核装备院 | AI产品助理 2025.04 - 2025.06",
-                b: `<p class="mb-6 text-white/70 text-sm">围绕公司主推的龙吟万界平台进行,涵盖提示词工程、AI鼠标功能定义,AI办公产品调研等内容;</p>
-                <div class="p-block"><span class="p-head">【产品调研】</span><p class="text-white/70 text-xs md:text-sm">结合公司战略目标--构建软硬件一体化的AI产品,聚焦AI硬件领域形成差异化优势，为AI鼠标产品研发奠定基础</p></div>
-                <div class="p-block"><span class="p-head">【交互功能确定】</span><p class="text-white/70 text-xs md:text-sm">明确原则:数据安全优先、低使用门槛;确定鼠标核心交互点包括AI调用、划词解析、语音输入记录等功能;</p></div>
-                <p class="data-highlight">【产品上线】为精准估算产品成本，在集团内部开展试点落地，试点业务覆盖20+业务部门、500+终端用户。</p>`
+                h: "中核装备院 | AI 产品助理 2025.04 - 2025.06",
+                b: `<p class="mb-10 p-sub-text">实习内容围绕公司主推的龙吟万界平台进行,涵盖提示词工程、AI鼠标功能定义,AI办公产品调研等内容;</p>
+                <div class="p-block"><span class="p-head">【产品调研】</span><div class="p-sub-text">结合公司战略目标--构建软硬件一体化的AI产品,聚焦AI硬件领域形成差异化优势，为AI鼠标产品研发奠定基础</div></div>
+                <div class="p-block"><span class="p-head">【交互功能确定】</span><div class="p-sub-text">明确原则:数据安全优先、低使用门槛;确定鼠标核心交互点包括AI调用、划词解析、语音输入记录等功能;</div></div>
+                <p class="data-highlight">【产品上线】试点业务覆盖20+业务部门、500+终端用户。</p>`
             },
             {
                 h: "快手 | 平台产品助理 2024.06 - 2024.08",
-                b: `<p class="mb-6 text-white/70 text-sm">快手电商平台会员满返功能</p>
-                <div class="p-block"><span class="p-head">【方案落地】</span><p class="text-white/70 text-xs md:text-sm">i.调研后落地会员满返实物商品功能，采用 “消费后返还实物赠品” 的后返逻辑，规避破价风险；ii.梳理“活动创建-用户领奖-效果复盘”全流程功能；建立活动数据看板帮助商家复盘活动。</p></div>
-                <p class="data-highlight">【项目试跑】商家会员近30日客单价提升+8.23%。</p>`
+                b: `<p class="mb-10 p-sub-text">快手电商平台会员满返功能</p>
+                <div class="p-block"><span class="p-head">【竞品调研与方案落地】</span><div class="p-sub-text">对标抖店/天猫逻辑，采用“后返逻辑”规避破价风险。梳理“活动创建 - 用户报名 - 累计领奖”全流程；建立活动数据看板帮助商家复盘。</div></div>
+                <p class="data-highlight">【项目试跑】对比参加活动前，商家会员近30日客单价提升+8.23%。</p>`
             }
         ];
 
@@ -229,7 +241,7 @@
         }
         switchTab(0);
 
-        /** 3. 3D 虚拟滚动引擎 **/
+        /** 3. 3D 虚拟滚动 & 手机适配逻辑 **/
         let sections = gsap.utils.toArray("section");
         let currentIdx = 0;
         let isAnimating = false;
@@ -242,38 +254,37 @@
             if (isAnimating || nextIdx === currentIdx || nextIdx < 0 || nextIdx >= sections.length) return;
             isAnimating = true;
             if(scrollGuide) scrollGuide.style.opacity = '0';
-            const current = sections[currentIdx];
-            const next = sections[nextIdx];
             if (nextIdx > 0) sidebar.classList.add('visible');
             else sidebar.classList.remove('visible');
 
+            const current = sections[currentIdx];
+            const next = sections[nextIdx];
             const tl = gsap.timeline({ onComplete: () => { gsap.set(current, { visibility: "hidden" }); currentIdx = nextIdx; isAnimating = false; updateSidebar(); } });
-            tl.to(current, { duration: 1.1, scale: 0.8, rotationX: direction === "down" ? 45 : -45, y: direction === "down" ? "-100%" : "100%", opacity: 0, ease: "expo.inOut" });
-            tl.fromTo(next, { visibility: "visible", y: direction === "down" ? "100%" : "-100%", scale: 1.2, rotationX: direction === "down" ? -45 : 45, opacity: 0, zIndex: 2 }, { duration: 1.1, y: "0%", scale: 1, rotationX: 0, opacity: 1, ease: "expo.inOut" }, 0);
+            
+            tl.to(current, { duration: 1.2, scale: 0.8, rotationX: direction === "down" ? 45 : -45, y: direction === "down" ? "-100%" : "100%", opacity: 0, ease: "expo.inOut" });
+            tl.fromTo(next, { visibility: "visible", y: direction === "down" ? "100%" : "-100%", scale: 1.2, rotationX: direction === "down" ? -45 : 45, opacity: 0, zIndex: 2 }, { duration: 1.2, y: "0%", scale: 1, rotationX: 0, opacity: 1, ease: "expo.inOut" }, 0);
         }
 
-        // 手机/微信滑动适配
         let ts;
-        window.addEventListener('touchstart', e => ts = e.touches[0].clientY, { passive: true });
+        window.addEventListener('touchstart', e => { ts = e.touches[0].clientY; }, { passive: true });
         window.addEventListener('touchend', e => {
             const activeBox = sections[currentIdx].querySelector('.scroll-container');
             if (activeBox) {
                 const isAtTop = activeBox.scrollTop === 0;
-                const isAtBottom = activeBox.scrollHeight - activeBox.scrollTop <= activeBox.clientHeight + 1;
-                const te = e.changedTouches[0].clientY;
-                const delta = ts - te;
+                const isAtBottom = Math.abs(activeBox.scrollHeight - activeBox.scrollTop - activeBox.clientHeight) < 2;
+                const delta = ts - e.changedTouches[0].clientY;
                 if (delta > 50 && !isAtBottom) return;
                 if (delta < -50 && !isAtTop) return;
             }
             const delta = ts - e.changedTouches[0].clientY;
             if (Math.abs(delta) > 50) transition(delta > 0 ? currentIdx + 1 : currentIdx - 1, delta > 0 ? "down" : "up");
-        }, { passive: true });
+        });
 
         window.addEventListener("wheel", e => {
             const activeBox = sections[currentIdx].querySelector('.scroll-container');
             if (activeBox) {
                 const isAtTop = activeBox.scrollTop === 0;
-                const isAtBottom = activeBox.scrollHeight - activeBox.scrollTop <= activeBox.clientHeight + 1;
+                const isAtBottom = Math.abs(activeBox.scrollHeight - activeBox.scrollTop - activeBox.clientHeight) < 2;
                 if (e.deltaY > 0 && !isAtBottom) return;
                 if (e.deltaY < 0 && !isAtTop) return;
             }
@@ -290,7 +301,7 @@
         let pts = [];
         function startParticles() {
             canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-            pts = []; for(let i=0; i< (window.innerWidth < 768 ? 3000 : 8000); i++) pts.push({a: Math.random()*Math.PI*2, r: (window.innerWidth < 768 ? 120 : 180)+Math.random()*50, s: 0.001+Math.random()*0.003, z: Math.random()*200-100});
+            pts = []; for(let i=0; i<(window.innerWidth < 768 ? 3000 : 8000); i++) pts.push({a: Math.random()*Math.PI*2, r: (window.innerWidth < 768 ? 120 : 180)+Math.random()*50, s: 0.001+Math.random()*0.003, z: Math.random()*200-100});
             renderParticles(0);
         }
         function renderParticles(t) {
